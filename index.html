@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+	
+	<title>DEEP LAKE : ETHIOPIA WATER BOUNDRIES</title>
+	
+
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/8.5.1/nouislider.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/8.5.1/nouislider.min.js"></script>
+<script type="text/javascript" src="./lib/leaflet-ajax-gh-pages/dist/leaflet.ajax.js"></script>
+  
+ 
+  
+   <style>
+    #mapid {
+	   width:820;
+	   height:650px;
+           margin-left:35px;
+		   margin-right:100px;
+           padding:20px;	   
+   }
+	  
+  </style>
+</head>
+<body>
+
+<div id="slider" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
+<div style="margin-right: auto; margin-left: auto; width: 90%; margin-bottom: 10px; text-align: center;">
+<input type="file" id="file_input" webkitdirectory="" directory="">
+<input type="text" value="Names" disabled="true" id="input-name">
+</div>
+<div id='mapid' ></div>
+  <script>
+xx=[];
+ yy=[];
+geojsonupdate={};
+geoar=[];
+resp=[];
+xValues=[];
+yValues=[];
+//names=[];
+jsonLayer=[];
+namefile=[];
+len=0;
+chartxy = [];
+chartid=[];
+chartidall=[];
+chartyall=[];
+charty = [];
+chartx = [];
+var updatedate=document.getElementById('input-number-date')
+var ctx = document.getElementById('myChart'); // node
+var myStyle = {
+    "color": "#ff7800",
+    "weight": 1,
+	"fill": false,
+	"opacity": 0.65
+   
+};
+
+
+document.getElementById('file_input').addEventListener('change',function(e){
+//debugger;
+//const dirHandle = await window.showDirectoryPicker();
+ names=e.target.files;
+ direct=names.webkitRelativePath
+ len= names.length;
+document.getElementById('input-name').value = names[0].name;
+
+for (i = 0; i < len; i++) {
+
+
+
+//debugger;
+ namefile [i] = names[i].webkitRelativePath
+ //'data/'+ names[i].name;
+ 
+geoar.push( L.geoJSON.ajax(namefile[i],{
+	
+      onEachFeature: onEachFeature
+	//style:mapstyle
+
+}));
+
+//ctx = document.getElementById("myChart");
+
+   
+geoar[i].on("click", function (event) {
+    // Assuming the clicked feature is a shape, not a point marker.
+	//debugger;
+    basicMap.fitBounds(event.layer.getBounds());
+	 clickedid =event.layer.feature.properties.ID_poly;
+	retr=chartid[10];
+	urh=chartid.length
+	urah=charty.length
+	//debugger;
+	//	for (i = 0; i < len; i++) {
+	//	  for (j = 0; j < chartid.length; i++) {
+		
+		//if (chartid[j] == clickedid) {
+	
+	//	debugger;
+	//	yy[i] = charty [j]
+    //     xx[i] = namefile[i];
+//idi[i]= resp[i].properties.ID_poly;
+//}
+//		}
+	//	}
+});
+
+//geoar[i]=jsonLayer;
+//geoar[whattt].addTo(basicMap);
+
+	 }
+	
+
+	
+
+ slidervar.removeAttribute('disabled');
+ slidervar.noUiSlider.updateOptions({
+ start: [ 1, len ],
+    range: {
+        'min': 1,
+        'max': len
+    }
+});	
+});
+slidervalues =0;
+//updatedate.value = addDays(new Date(), 25).toISOString().slice(0,10) ;
+var slidervar = document.getElementById('slider');
+noUiSlider.create(slidervar, {
+    connect: true,
+	//connect: [false, true],
+    start: [1,4],
+	step: 1,
+    range: {
+        min: 1,
+        max: 4
+    },
+	format: {
+    from: function(value) {
+            return parseInt(value);
+        },
+    to: function(value) {
+            return parseInt(value);
+        }
+    }
+});
+slidervar.setAttribute('disabled', true);
+//disable one slider 
+var origins = slider.getElementsByClassName('noUi-origin');
+origins[1].setAttribute('disabled', true);
+
+  function onEachFeature(feature, layer) { 
+             
+			//debugger;
+	 
+
+	   layer.bindPopup('<h1>'+feature.properties.NAME+
+	   '</h1><p>area: '+feature.properties.Shape_Area+
+	   '</h1><p>id '+feature.properties.ID_poly+
+	    '</p> <canvas id="myChart" style="width= "300" height="250"></canvas>'   );
+		
+	  // '</p> <img src=" ' + chartvis + ' " width= "300" height="250" />'
+	chartid.push(feature.properties.ID_poly);
+	//chartyall[i].push(feature.properties.Shape_Area);
+   // var ctx = document.getElementById("myChart").getContext("2d");
+   
+
+	  // 	debugger;
+	//basicMap.fitBounds(layer.getBounds());
+		   yy=[0.25657,0.26456,0.24654,0.256666];//[i] = resp[i].properties.Area_kmsq;
+xx=['202201','202202','202205','202207'];//[i] = resp[i].properties.SOURCE_SHP;
+//var ctx = document.getElementById('myChart'); // node
+//var ctx = document.getElementById('myChart').getContext('2d'); // 2d context
+//var ctx = $('#myChart'); // jQuery instance
+//var ctx = 'myChart'; // element id
+ chart = new Chart("myChart", {
+  type: "line",
+  data: {
+    labels: xx,
+    datasets: [{
+      fill: false,
+      lineTension: 0,
+      backgroundColor: "rgba(0,0,255,1.0)",
+	  fillColor: "rgba(220,220,220,0.2)",
+            strokeColor: "rgba(220,220,220,1)",
+            pointColor: "rgba(220,220,220,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+      borderColor: "rgba(0,0,255,0.1)",
+      data: yy
+    }]
+  },
+  options: {
+	 // events: ['click']
+	 onClick: (e) => {
+		 //debugger;
+		 var points = chart.getElementsAtEvent(e);
+		// updateMap();
+  
+	
+	 },
+	 elements: {
+          point: {
+            radius : 5,//customRadius,
+            display: false
+          }
+        },
+    legend: {display: false},
+    scales: {
+      yAxes: [{ticks: {min: 0.2, max:0.3}}],
+    //   xAxes: [{
+	//					type: 'time',
+     //           distribution: 'series'
+	  // }]
+  }
+  }
+});
+}
+
+
+    function mapstyle(feature) {
+	return{
+		fillColor:"#00F",
+	        color:"#000",
+	        weight:'1',
+	        fillOpacity:1
+	};
+    }
+    //CHANGE HERE
+    var basicMap = L.map('mapid').setView([ 7.54, 38.61],6);
+	
+	var basemaps = {
+		OSM:  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		maxZoom: 19,
+		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+	}),
+		googleSat: L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+}),
+googleHybrid : L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+}),
+googleTerrain :L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+}),
+googleStreets : L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+}),
+		Places: L.tileLayer.wms('http://ows.mundialis.de/services/service?', {
+			layers: 'OSM-Overlay-WMS'
+		}),	
+	};
+	var layerscontrol= L.control.layers(basemaps,{}, {collapsed: true}).addTo(basicMap);
+	basemaps.googleHybrid.addTo(basicMap);
+	
+
+
+	 slidervar.noUiSlider.on('update', function( values, handle ) {
+
+if (len > 0){ 
+
+
+//debugger;
+for (i = 0; i < len; i++) {
+basicMap.removeLayer(geoar[i])
+}
+whattt= values[0]-1;
+
+document.getElementById('input-name').value = names[whattt].name;
+geoar[whattt].addTo(basicMap);
+//chart.update();
+
+	}
+
+}); 
+
+//for (let i = 0; i < resp.length; i++) {
+
+
+//};
+
+
+function customRadius( context )
+  {
+	 // debugger;
+	//  context.dataset.data[2]. pointColor= "rgba(255, 99, 132, 0.25)"
+    let index = context.dataIndex;
+   let value = context.dataset.data[ slidervalues];
+//	value=3;
+    return index === 3 || value >= 2 ?
+          5 :
+           1;
+  }
+  </script>
+</body>
+</html>
