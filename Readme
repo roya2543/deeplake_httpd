@@ -1,4 +1,4 @@
-This is the web visualization part for DeepLake project that is founded by Newcastle University and newton fund consolidation. The codes are not cleaned yet. 
+This is the web visualization part for DeepLake project that is founded by Newcastle University and Newton und consolidation. The codes are not cleaned yet. 
 The visualization presents the water boundries of lakes changing through time. The data that are provided in this example are dummy data and are not final result. 
 The purpose of this part of the project is to present the result of deep learning models to General public and those who do not have technical knowldge.
 Javascript and Leaflet libraries are used for the coding. 
